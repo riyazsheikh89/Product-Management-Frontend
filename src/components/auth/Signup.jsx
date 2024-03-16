@@ -38,7 +38,7 @@ function Signup() {
     <div className="signup-container w-screen h-screen  flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-5 w-3/6 sm:w-96 h-4/6 rounded-lg shadow dark:border"
+        className="bg-white p-5 w-3/6 sm:w-96 min-h-4/6 rounded-lg shadow dark:border"
       >
         <div className="text-center text-xl text-blue-600 font-semibold pb-2">
           Create an account
