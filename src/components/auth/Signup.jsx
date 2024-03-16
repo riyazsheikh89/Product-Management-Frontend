@@ -1,10 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import axios from "axios";
 
 function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("MEMBER");
+    const [err, setErr] = useState("");
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
       setEmail(e.target.value);
@@ -22,17 +26,56 @@ function Signup() {
       setRole(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      // Handle form submission here
-      alert('Submitted')
-      console.log("Form submitted");
-      console.log(email + "-" + name + "-" + password + "-" + role);
-      setName("");
-      setEmail("");
-      setPassword("");
-      setRole("MEMBER");
+      try {
+        const response = validateInputData();
+        if (response != "VALID_INPUT") {
+          setErr(response);
+          alert(response);
+          return;
+        }
+
+        const config = {
+          headers: {"Content-Type": "application/json"}
+        }
+        const { data } = await axios.post("/api/v1/signup",
+          { name, email, password },
+          config
+        );
+        navigate("/");  //login page
+      } catch (error) {
+        console.log(error);
+        if (error.response.status === 403) {
+          alert(error.response.data);
+        }
+      } finally {
+        setName("");
+        setEmail("");
+        setPassword("");
+        setRole("MEMBER");
+      }
     };
+
+    function validateInputData() {
+      if (!name || !email || !password) {
+          return "All fields are mandatory!"
+      }
+  
+      // Regular expression for email & password validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+      if (!emailRegex.test(email)) {
+          return "Enter a valid email address!";
+      }
+      if (!passwordRegex.test(password)) {
+          return "Password must be at least 8 characters long and should contain at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character";
+      }
+  
+      // if everything is okay, return success
+      return "VALID_INPUT";
+  }
 
   return (
     <div className="signup-container w-screen h-screen  flex items-center justify-center">
