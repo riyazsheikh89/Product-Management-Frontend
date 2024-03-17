@@ -9,7 +9,7 @@ const AppBar = () => {
   return (
     <nav className="w-full flex justify-around h-14 bg-slate-300">
       <div className="w-4/12"></div>
-      <div className="w-4/6 flex items-center justify-evenly h-14 font-semibold md:justify-end md:gap-10 md:pr-6">
+      <div className="w-full flex items-center justify-evenly h-14 font-semibold md:justify-end md:gap-10 md:pr-6">
         <p
           className="hover:text-blue-700 hover:cursor-pointer"
           onClick={() => navigate("/")}
@@ -25,7 +25,7 @@ const AppBar = () => {
         {userInfo && userInfo.role === 'ADMIN' ? (
         <p
           className="hover:text-blue-700 hover:cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/pending-requests")}
         >
           Pending Request
         </p>) : null
