@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import ProductCard from './ProductCard';
+import AppBar from '../miscellaneous/AppBar';
 
 const ProductList = () => {
     const [products, setProduct] = useState([]);
@@ -26,6 +27,7 @@ const ProductList = () => {
 
   return (
     <div className='max-w-screen h-auto justify-center flex flex-wrap'>
+      <AppBar />
       {products.map((item) => (
         <ProductCard item={item} key={item._id}/>
       ))}

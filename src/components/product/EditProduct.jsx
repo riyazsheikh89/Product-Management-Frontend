@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserState } from "../../context/UserProvider"
+import AppBar from "../miscellaneous/AppBar";
 
 const EditProduct = () => {
   const { id } = useParams(); // productId
@@ -94,8 +95,9 @@ const EditProduct = () => {
 
 
   return (
-    <div className="flex justify-center py-20 w-screen min-h-screen">
-      <div className="flex flex-col items-center rounded-lg p-4 bg-blue-200 h-auto w-96 md:w-4/6 md:flex-row md:items-start md:p-10">
+    <div className="flex flex-col items-center  pb-20 w-screen min-h-screen">
+      <AppBar />
+      <div className="flex flex-col items-center mt-10 rounded-lg p-4 bg-blue-200 h-auto w-96 md:w-4/6 md:flex-row md:items-start md:p-10">
         <div className="image-container mb-4 md:mr-4">
           <img
             src={product.image}

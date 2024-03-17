@@ -35,15 +35,7 @@ function Login() {
                 email: data.data.email,
                 _id: data.data._id
             }));
-
-            if (data.data.role === 'MEMBER') {
-                //REDIRECT TO MEMBER PAGE
-                // navigate("/signup");
-            } else {
-                //REDIRECT TO ADMIN PAGE
-                navigate("/signup");
-
-            }
+            navigate("/products");
         }
         
       } catch (error) {

@@ -18,6 +18,7 @@ export const UserProvider = ({ children }) => {
       try {
         if (!token) {
           setLoading(false);
+          setUserInfo(null);
           return;
         }
         const config = {
@@ -43,7 +44,7 @@ export const UserProvider = ({ children }) => {
     }
 
     fetchUserDetails();
-  }, [token]); // Include dependency
+  }, []); // Include dependency
 
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
