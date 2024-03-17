@@ -1,7 +1,8 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ item }) => {
-  console.log(item);
+  const navigate = useNavigate();
+  
   return (
     <div className="flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl m-6 w-96 min-h-4/6">
 
@@ -27,6 +28,7 @@ const ProductCard = ({ item }) => {
       <div className="p-6 pt-0">
         <button
           className="align-middle font-bold text-center uppercase disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+          onClick={() => navigate(`/product/${item._id}`)}
         >
           Edit Product
         </button>
