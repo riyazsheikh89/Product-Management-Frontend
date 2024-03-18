@@ -60,14 +60,10 @@ const EditProduct = () => {
       }
 
       const payload = { ...product };
-      if (userInfo.role === 'ADMIN') {
-        // delete the _id, otherwise updating with _id will throw error
-        delete payload._id;
-      } else {
-        payload.updatedFields = updatedFields;
-        payload.productId = product._id;
-        payload.author = userInfo._id;
-      }
+      payload.updatedFields = updatedFields;
+      payload.productId = product._id;
+      payload.author = userInfo._id;
+      delete payload._id; // delete the _id, otherwise it will create error
       
       // Upload the images to Cloudinary
       if (images.length > 0) {

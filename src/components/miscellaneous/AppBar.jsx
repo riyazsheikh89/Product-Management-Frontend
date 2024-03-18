@@ -12,7 +12,13 @@ const AppBar = () => {
       <div className="w-full flex items-center justify-evenly h-14 font-semibold md:justify-end md:gap-10 md:pr-6">
         <p
           className="hover:text-blue-700 hover:cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/products")}
+        >
+          Products
+        </p>
+        <p
+          className="hover:text-blue-700 hover:cursor-pointer"
+          onClick={() => navigate("/dashboard")}
         >
           Dashboard
         </p>

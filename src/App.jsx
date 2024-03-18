@@ -6,6 +6,7 @@ import ProductList from './components/product/ProductList';
 import EditProduct from './components/product/EditProduct';
 import PendingList from './components/product/PendingList';
 import MySubmissions from './components/miscellaneous/MySubmissions';
+import Dashboard from './components/miscellaneous/Dashboard';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/product/:id" element={<EditProduct />} />
           <Route path="/pending-requests" element={<PendingList />} />
           <Route path="/profile/my-submissions" element={<MySubmissions />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </div>

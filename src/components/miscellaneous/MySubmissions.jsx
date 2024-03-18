@@ -17,7 +17,6 @@ const MySubmissions = () => {
                     }
                 }
                 const { data } = await axios.get("/api/v1/reviews/get-all", config);
-                console.log(data.data);
                 setSubmissions(data.data);
             } catch (error) {
                 console.log(error);
@@ -34,7 +33,7 @@ const MySubmissions = () => {
       ) : (
         <div className="p-16 text-red-700 flex flex-col items-center">
           <p>You don&apos;t have any submissions!</p>
-          <p>for making submissions visit <a className="text-blue-800 underline" onClick={() => navigate("/products")}>Products page </a>
+          <p>for making submissions visit <a className="text-blue-800 underline cursor-pointer" onClick={() => navigate("/products")}>Products page </a>
           </p>
         </div>
       )}
