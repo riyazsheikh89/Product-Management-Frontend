@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import AppBar from '../miscellaneous/AppBar';
+import { useNavigate } from 'react-router-dom';
 
 const PendingList = () => {
     const [pendingList, setPendingList] = useState([]);
     const [reload, setReload] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchPendingReviews() {
@@ -32,7 +34,12 @@ const PendingList = () => {
         <PendingReviewCard item={item} key={item._id} setReload={setReload}/>
         ))
         ) : (
-          <p className='font-semibold text-center pt-10'>No pending request...</p>
+          <div className='font-bold flex justify-center mt-10'>
+            No pending request! Go back to &nbsp; <p 
+            className='text-blue-600 underline cursor-pointer'
+            onClick={() => navigate("/products")}
+            >Products Page</p>
+          </div>
         )
       }
     </div>
@@ -53,7 +60,7 @@ function PendingReviewCard({ item, setReload }) {
             }
             const { data } = await axios.patch(`/api/v1/review/update/${item._id}`,JSON.stringify({status: status}), config);
 
-            if (data.success) {
+            if (data.success && status !== 'REJECTED') {
               delete data.data._id;
               const response = await axios.patch(`/api/v1/product/update/${data.data.productId}`, JSON.stringify(data.data), config);
               console.log(response.data.data);

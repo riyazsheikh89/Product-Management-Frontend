@@ -19,9 +19,9 @@ const AppBar = () => {
         {userInfo && userInfo.role === 'ADMIN' ? null : (
         <p
           className="hover:text-blue-700 hover:cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/profile/my-submissions")}
         >
-          Submission
+          Submissions
         </p>)
         }
         {userInfo && userInfo.role === 'ADMIN' ? (

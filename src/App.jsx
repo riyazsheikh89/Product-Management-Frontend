@@ -5,6 +5,7 @@ import Signup from './components/auth/Signup'
 import ProductList from './components/product/ProductList';
 import EditProduct from './components/product/EditProduct';
 import PendingList from './components/product/PendingList';
+import MySubmissions from './components/miscellaneous/MySubmissions';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/products" element={<ProductList />} />
           <Route path="/product/:id" element={<EditProduct />} />
           <Route path="/pending-requests" element={<PendingList />} />
+          <Route path="/profile/my-submissions" element={<MySubmissions />} />
         </Routes>
       </Router>
     </div>
