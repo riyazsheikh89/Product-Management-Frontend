@@ -18,7 +18,6 @@ export const UserProvider = ({ children }) => {
       try {
         if (!token) {
           setLoading(false);
-          setUserInfo(null);
           return;
         }
         const config = {
@@ -27,15 +26,16 @@ export const UserProvider = ({ children }) => {
             Authorization: `Bearer ${token}`
           }
         };
-        const { data } = await axios.get("api/v1/me", config);
-
-        setUserInfo((prevUserInfo) => ({
-          ...prevUserInfo,
-          role: data.data.role,
-          name: data.data.name,
-          email: data.data.email,
-          _id: data.data._id
-        }));
+        const {data} = await axios.get("/api/v1/me", config);
+        if (data.success) {
+          setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            role: data.data.role,
+            name: data.data.name,
+            email: data.data.email,
+            _id: data.data._id
+          }));
+        }
       } catch (error) {
         console.error("Error fetching user details:", error);
       } finally {
@@ -44,11 +44,11 @@ export const UserProvider = ({ children }) => {
     }
 
     fetchUserDetails();
-  }, []); // Include dependency
+  }, [token]); // Include dependency
 
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
-      {loading ? <p className="text-center">Loading...</p> : children}
+      {loading ? <p className="text-center pt-96 text-2xl">Loading...</p> : children}
     </UserContext.Provider>
   );
 };

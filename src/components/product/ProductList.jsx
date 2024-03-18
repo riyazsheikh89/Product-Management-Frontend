@@ -18,7 +18,7 @@ const ProductList = () => {
                 const { data } = await axios.get("/api/v1/get-products?page=1", config);
                 setProduct(data.data);
             } catch (error) {
-                //something
+                console.log(error);
             }
         }
 

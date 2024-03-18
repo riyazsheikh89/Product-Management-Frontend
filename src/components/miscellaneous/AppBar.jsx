@@ -16,12 +16,14 @@ const AppBar = () => {
         >
           Dashboard
         </p>
+        {userInfo && userInfo.role === 'ADMIN' ? null : (
         <p
           className="hover:text-blue-700 hover:cursor-pointer"
           onClick={() => navigate("/")}
         >
           Submission
-        </p>
+        </p>)
+        }
         {userInfo && userInfo.role === 'ADMIN' ? (
         <p
           className="hover:text-blue-700 hover:cursor-pointer"
