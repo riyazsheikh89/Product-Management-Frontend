@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const PendingList = () => {
     const [pendingList, setPendingList] = useState([]);
-    const [reload, setReload] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,13 +24,13 @@ const PendingList = () => {
         }
 
         fetchPendingReviews();
-    }, [reload]);
+    }, []);
   return (
     <div className='pb-10'>
       <AppBar />
       {pendingList && pendingList.length > 0 ? (
         pendingList.map((item) => (
-        <PendingReviewCard item={item} key={item._id} setReload={setReload}/>
+        <PendingReviewCard item={item} key={item._id} setPendingList={setPendingList}/>
         ))
         ) : (
           <div className='font-bold flex justify-center mt-10'>
@@ -48,9 +47,10 @@ const PendingList = () => {
 
 
 
-function PendingReviewCard({ item, setReload }) {
+function PendingReviewCard({ item, setPendingList }) {
+    const [ highlighted ] = useState(item.updatedFields);
 
-    const handleSubmit = async(status) => {
+    const handleSubmit = async(status, id) => {
         try {
             const config = {
                 headers: {
@@ -59,17 +59,19 @@ function PendingReviewCard({ item, setReload }) {
                 }
             }
             const { data } = await axios.patch(`/api/v1/review/update/${item._id}`,JSON.stringify({status: status}), config);
+            setPendingList((prevState) => prevState.filter(item => item._id !== id));
 
             if (data.success && status !== 'REJECTED') {
               delete data.data._id;
               const response = await axios.patch(`/api/v1/product/update/${data.data.productId}`, JSON.stringify(data.data), config);
               console.log(response.data.data);
             }
-            setReload(true);
+            
         } catch (error) {
             console.log(error);
         }
     }
+    console.log(item);
 
     return (
       <div className="w-screen h-auto flex justify-center">
@@ -84,19 +86,19 @@ function PendingReviewCard({ item, setReload }) {
           </div>
 
           <div className="mt-6 p-4 rounded-xl bg-slate-200 flex flex-col gap-3">
-            <div>
+            <div className={`${highlighted.includes("productName") ? 'bg-yellow-300' : null}`}>
               <p className="font-semibold">Product Name:</p>
               <p>{item.productName}</p>
             </div>
-            <div>
+            <div className={`${highlighted.includes("price") ? 'bg-yellow-300' : null}`}>
               <p className="font-semibold">Price:</p>
               <p>{item.price}</p>
             </div>
-            <div>
+            <div className={`${highlighted.includes("department") ? 'bg-yellow-300' : null}`}>
               <p className="font-semibold">Category:</p>
               <p>{item.department}</p>
             </div>
-            <div>
+            <div className={`${highlighted.includes("productDescription") ? 'bg-yellow-300' : null}`}>
               <p className="font-semibold">Description:</p>
               <p>{item.productDescription}</p>
             </div>
@@ -105,7 +107,7 @@ function PendingReviewCard({ item, setReload }) {
           <div className="pt-6 pb-4 w-full flex justify-between">
             <button 
             className="text-white font-medium bg-red-500 hover:bg-red-900 rounded-lg px-12 py-2.5"
-            onClick={() => handleSubmit("REJECTED")}
+            onClick={() => handleSubmit("REJECTED", item._id)}
             >Reject</button>
 
             <button 
